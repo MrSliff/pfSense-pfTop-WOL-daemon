@@ -2,11 +2,7 @@ import os
 
 host = "192.168.20.3"
 
-result = os.popen('pftop -b -a -f "dst host "' + host + ' | grep 4:4')
+#result = os.popen('pftop -b -a -f "dst host "' + host + ' | grep 4:4')
+output = os.popen('pftop -b -a -f "dst host "' + host).read().split()
 
-
-print (result.read())
-
-print("Established connections: " + len(result))
-
-result.close()
+print (output[1])
