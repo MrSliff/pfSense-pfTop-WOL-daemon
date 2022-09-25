@@ -1,5 +1,7 @@
 import os
 
-content = os.popen()
+host = "192.168.20.3"
 
-test = content
+result = os.popen('pftop -b -a -f "dst host "' + host)
+
+print result
