@@ -20,7 +20,15 @@ Instructions on how to use this script will follow as soon as its finished
 
 This script is open source with no restrictions in usage, feel free to use it in your environment.
 
+### paho-mqtt module licensing
+
 The paho-mqtt module is made available under the terms of the Eclipse Public License v2.0 and Eclipse Distribution License v1.0 which accompany this distribution.
 
 The Eclipse Public License is available at
     http://www.eclipse.org/legal/epl-v10.html
+and the Eclipse Distribution License is available at
+    http://www.eclipse.org/org/documents/edl-v10.php.
+
+Many thanks to the Contributors:
+Roger Light - initial API and implementation
+Ian Craggs - MQTT V5 support
