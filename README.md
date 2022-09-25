@@ -1,4 +1,4 @@
-# Python Script to wake up hosts in with pftop states
+# Python Script to wake up hosts in pfSense with pftop states
 
 ## Disclaimer
 This script is still in development. As soo as its done, this disclaimer will be removed.
