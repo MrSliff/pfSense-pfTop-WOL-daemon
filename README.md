@@ -10,6 +10,10 @@ Since the Wake-On-Lan functionality is quite unreliable on my server, i had to f
 
 One solution i want to try is to combine this script with an Wemos S2 (ESP32-S2), which emulates a HID-Keyboard and sends a keyboard input to wake up the server.
 
+## Installation
+
+Instructions on how to use this script will follow as soon as its finished
+
 ## License
 
 This script is open source with no restrictions in usage, feel free to use it in your environment.
