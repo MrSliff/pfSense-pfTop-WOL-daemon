@@ -26,7 +26,7 @@ The paho-mqtt module is made available under the terms of the Eclipse Public Lic
 
 The Eclipse Public License is available at
     http://www.eclipse.org/legal/epl-v10.html
-and the Eclipse Distribution License is available at
+    and the Eclipse Distribution License is available at
     http://www.eclipse.org/org/documents/edl-v10.php.
 
 Many thanks to the Contributors:
