@@ -4,7 +4,7 @@ from daemonize import Daemonize
 from pythonping import ping
 import paho.mqtt.client as mqtt
 
-######## SETTINGS ##################
+######## SETTINGS #################
 
 host = "192.168.20.3" # Which host IP to listen for activity
 
