@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import os
 from time import sleep
 from daemonize import Daemonize
@@ -9,15 +10,12 @@ import paho.mqtt.client as mqtt
 host = "192.168.20.3" # Which host IP to listen for activity
 
 mqtt_config = ["host": "192.168.20.35", "port": 1883, "keepalive": 60] # Set up mqtt
-
 mqtt_device_topic = ["unraid_wakeup"]
 mqtt_subtopic = ["state": "/state", "wakeup": "/wakeup"]
 
 sleep_time = 1 #Set sleep time for daemon in seconds (standard 1s)
 
 #####################################
-
-pid = "/tmp/pftop_wake.pid"
 
 ############# MQTT ################
 
@@ -34,14 +32,18 @@ mqtt_client.loop_start()
 
 ####################################
 
+last_state: NULL
+
+pid = "/tmp/pftop_wake.pid"
+
 def main ():
     while True:
         
         if not ping(host,count=2).success():
-
             if len(os.popen('pftop -b -a -f "dst host "' + host + ' | grep 2:0').readlines()) > 0:
-
                 mqtt_client.publish()
+        else:
+            
         
         sleep(sleep_time)
 
