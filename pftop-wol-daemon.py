@@ -92,6 +92,8 @@ def main ():
 
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "on")
+                
+            sleep(240)
         
         sleep(sleep_time)
 
