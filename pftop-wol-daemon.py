@@ -30,7 +30,7 @@ if MQTT:
 #Ping these clients to wake up the server/host if the clients are available
 #It is recommended to set static IP addresses on the clients
 if CLIENT_ACTIVITY:
-    clients = ["192.168.30.100","192.168.40.141"]
+    clients = ["192.168.30.100","192.168.40.10","192.168.40.11"]
 
 #Set sleep time for daemon in seconds
 sleep_time = 1 
