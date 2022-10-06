@@ -74,7 +74,7 @@ def main ():
                 if MQTT:
                     mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
                     
-                sleep(20)
+                sleep(30)
 
             if CLIENT_ACTIVITY:
                 for client in clients:
@@ -86,7 +86,7 @@ def main ():
                         if MQTT: 
                             mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
                             
-                    sleep(20)
+                    sleep(30)
 
         else:
 
