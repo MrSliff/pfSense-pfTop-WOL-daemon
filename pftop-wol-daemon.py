@@ -11,7 +11,7 @@ import requests
 WOL= False #Not implemented yet!
 MQTT = False
 WEBHOOK = True
-CLIENT_ACTIVITY = True
+CLIENT_ACTIVITY = False
 
 #Which host IP to wakeup
 host = "192.168.20.3" 
@@ -63,7 +63,7 @@ def main ():
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "off")
 
-            if len(os.popen('pftop -b -a -f "dst host "' + host + ' | grep 2:0').readlines()) > 0:
+            if len(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines()) > 0:
 
                 #if WOL:
                     #do something
