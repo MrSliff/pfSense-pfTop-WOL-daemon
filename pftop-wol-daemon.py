@@ -73,6 +73,8 @@ def main ():
 
                 if MQTT:
                     mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
+                    
+                sleep(20)
 
             if CLIENT_ACTIVITY:
                 for client in clients:
@@ -83,6 +85,8 @@ def main ():
                             requests.get(webhook_url)
                         if MQTT: 
                             mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
+                            
+                    sleep(20)
 
         else:
 
