@@ -32,7 +32,8 @@ if MQTT:
 if CLIENT_ACTIVITY:
     clients = ["192.168.30.100","192.168.40.141"]
 
-sleep_time = 1 #Set sleep time for daemon in seconds (standard 1s)
+#Set sleep time for daemon in seconds
+sleep_time = 1 
 
 #####################################
 
