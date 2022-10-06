@@ -1,3 +1,4 @@
+from operator import truediv
 import os
 from time import sleep
 from daemonize import Daemonize
@@ -6,6 +7,8 @@ import paho.mqtt.client as mqtt
 import requests
 
 ######## SETTINGS #################
+
+DEBUG = True
 
 #Which services should be used (True/False)
 WOL= False #Not implemented yet!
@@ -73,19 +76,29 @@ def main ():
 
                 if MQTT:
                     mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
-                    
+                
+                if DEBUG:
+                    print("Waking up by pftop state")
+                
                 sleep(30)
 
             if CLIENT_ACTIVITY:
                 for client in clients:
                     if ping(client,count=2).success():
-                        #if WOL:
-                            #do something
-                        if WEBHOOK:
-                            requests.get(webhook_url)
-                        if MQTT: 
-                            mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
-                            
+                        WAKEUP = True
+                        
+                if WAKEUP:
+                    WAKEUP = False    
+                    #if WOL:
+                        #do something
+                    if WEBHOOK:
+                        requests.get(webhook_url)
+                    if MQTT: 
+                        mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
+                        
+                    if DEBUG:
+                        print("Waking up by client activity")
+                    
                     sleep(30)
 
         else:
@@ -97,5 +110,5 @@ def main ():
         
         sleep(sleep_time)
 
-daemon = Daemonize(app="pftop_wake", pid=pid, action=main)
-daemon.start()
+#daemon = Daemonize(app="pftop_wake", pid=pid, action=main)
+#daemon.start()
