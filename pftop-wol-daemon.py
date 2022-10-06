@@ -80,7 +80,7 @@ def main ():
                 if DEBUG:
                     print("Waking up by pftop state")
                 
-                sleep(30)
+                sleep(240)
 
             if CLIENT_ACTIVITY:
                 for client in clients:
@@ -99,7 +99,7 @@ def main ():
                     if DEBUG:
                         print("Waking up by client activity")
                     
-                    sleep(30)
+                    sleep(240)
 
         else:
 
@@ -110,5 +110,6 @@ def main ():
         
         sleep(sleep_time)
 
+main()
 #daemon = Daemonize(app="pftop_wake", pid=pid, action=main)
 #daemon.start()
