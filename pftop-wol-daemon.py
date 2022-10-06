@@ -8,13 +8,13 @@ import requests
 
 ######## SETTINGS #################
 
-DEBUG = True
+DEBUG = False
 
 #Which services should be used (True/False)
 WOL= False #Not implemented yet!
 MQTT = False
 WEBHOOK = True
-CLIENT_ACTIVITY = False
+CLIENT_ACTIVITY = True
 
 #Which host IP to wakeup
 host = "192.168.20.3" 
@@ -112,6 +112,8 @@ def main ():
         
         sleep(sleep_time)
 
-main()
-#daemon = Daemonize(app="pftop_wake", pid=pid, action=main)
-#daemon.start()
+if DEBUG:
+    main()
+else:
+    daemon = Daemonize(app="pftop_wake", pid=pid, action=main)
+    daemon.start()
