@@ -105,6 +105,8 @@ def main ():
 
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "on")
+            
+            print("Host online, sleeping for 240s")
                 
             sleep(240)
         
