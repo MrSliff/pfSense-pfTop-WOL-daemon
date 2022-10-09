@@ -61,12 +61,7 @@ if MQTT:
 def main ():
     while True:
         
-        host_online = ping(host,count=5).success()
-        
-        if DEBUG:
-            print(host_online)
-        
-        if not host_online:
+        if not ping(host,count=2).success():
 
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "off")
@@ -87,7 +82,7 @@ def main ():
                 
                 sleep(240)
 
-            if CLIENT_ACTIVITY:
+            elif CLIENT_ACTIVITY:
                 for client in clients:
                     if ping(client,count=2).success():
                         WAKEUP = True
@@ -109,11 +104,7 @@ def main ():
                         if DEBUG:
                             print("Waking up by client activity")
                     
-                        sleep(240)
-                        
-                    else:
-                        if DEBUG:
-                            print("Host already online, not waking up")                        
+                        sleep(240)                      
 
         else:
 
