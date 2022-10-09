@@ -61,7 +61,12 @@ if MQTT:
 def main ():
     while True:
         
-        if not ping(host,count=2).success():
+        host_online = ping(host,count=5).success()
+        
+        if DEBUG:
+            print(host_online)
+        
+        if not host_online:
 
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "off")
