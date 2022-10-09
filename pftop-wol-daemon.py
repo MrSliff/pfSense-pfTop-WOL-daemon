@@ -93,18 +93,27 @@ def main ():
                         WAKEUP = True
                         
                 if WAKEUP:
-                    WAKEUP = False    
-                    #if WOL:
-                        #do something
-                    if WEBHOOK:
-                        requests.get(webhook_url)
-                    if MQTT: 
-                        mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
-                        
-                    if DEBUG:
-                        print("Waking up by client activity")
                     
-                    sleep(240)
+                    host_online = ping(host,count=5).success()
+                    
+                    if not host_online:
+                                           
+                        WAKEUP = False    
+                        #if WOL:
+                            #do something
+                        if WEBHOOK:
+                            requests.get(webhook_url)
+                        if MQTT: 
+                            mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
+                        
+                        if DEBUG:
+                            print("Waking up by client activity")
+                    
+                        sleep(240)
+                        
+                    else:
+                        if DEBUG:
+                            print("Host already online, not waking up")                        
 
         else:
 
