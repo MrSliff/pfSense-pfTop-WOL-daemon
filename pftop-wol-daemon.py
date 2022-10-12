@@ -17,7 +17,22 @@ WEBHOOK = True
 CLIENT_ACTIVITY = True
 
 #Which host IP to wakeup
-host = "192.168.20.3" 
+host_wakeup = "192.168.20.3" 
+
+#Which host IPs to monitor for activity to wakeup host
+host_activity = ["192.168.20.3",
+                 "192.168.20.2",
+                 "192.168.20.16",
+                 "192.168.20.18",
+                 "192.168.20.21",
+                 "192.168.20.22",
+                 "192.168.20.50",
+                 "192.168.20.51",
+                 "192.168.20.60",
+                 "192.168.20.174",
+                 "10.100.0.10",
+                 "10.100.0.11",
+                 "10.100.0.12"]
 
 #Call a webhook on an external client (like a "fake" power button which is pressed)
 #The external client is programmed to do whatever you program it to do
@@ -65,18 +80,21 @@ def main ():
 
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "off")
-
-            if len(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines()) > 0:
-
+                
+            for host in host_activity:
+                if len(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines()) > 0:
+                    HOST_ACTIVE = True
+                    break
+            
+            if HOST_ACTIVE:
+                
+                HOST_ACTIVE = False                   
                 #if WOL:
-                    #do something
-
+                    #do something                
                 if WEBHOOK:
                     requests.get(webhook_url)
-
                 if MQTT:
-                    mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
-                
+                    mqtt_client.publish(mqtt_wakeup_topic, "wakeup")                
                 if DEBUG:
                     print("Waking up by pftop state")
                 
@@ -92,7 +110,7 @@ def main ():
                     host_online = ping(host,count=5).success()
                     
                     if not host_online:
-                                           
+                                        
                         WAKEUP = False    
                         #if WOL:
                             #do something
