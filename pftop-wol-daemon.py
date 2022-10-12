@@ -8,7 +8,7 @@ import requests
 
 ######## SETTINGS #################
 
-DEBUG = False
+DEBUG = True
 
 #Which services should be used (True/False)
 WOL= False #Not implemented yet!
