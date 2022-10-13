@@ -110,8 +110,9 @@ def main ():
 
             elif CLIENT_ACTIVITY:
                 for client in clients:
-                    pinged = ping(client,count=2)
-                    if pinged.success():
+                    if DEBUG:
+                        print("Pinging Client " + client)
+                    if ping(client,count=2).success():
                         WAKEUP = True
                         break
                         
