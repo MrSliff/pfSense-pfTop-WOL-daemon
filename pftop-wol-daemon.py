@@ -2,7 +2,6 @@ from operator import truediv
 import os
 from time import sleep
 from daemonize import Daemonize
-from pythonping import ping
 import paho.mqtt.client as mqtt
 import requests
 
@@ -75,11 +74,13 @@ if MQTT:
 def main ():
 
     WAKEUP = False
-    HOST_ACTIVE = False
+    PFTOP_ACTIVE = False
 
     while True:
         
-        if not ping(host_wakeup,count=2).success():
+        HOST_UP = True if os.system("ping -c 5 " + host_wakeup.strip(";")) is 0 else False
+
+        if HOST_UP:
 
             if DEBUG:
                 print("Host offline, checking client activity")
@@ -89,14 +90,14 @@ def main ():
                 
             for host in host_activity:
                 if len(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines()) > 0:
-                    HOST_ACTIVE = True
+                    PFTOP_ACTIVE = True
                     if DEBUG:
                         print(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines())
                     break
             
-            if HOST_ACTIVE:
+            if PFTOP_ACTIVE:
                 
-                HOST_ACTIVE = False                   
+                PFTOP_ACTIVE = False                   
                 #if WOL:
                     #do something                
                 if WEBHOOK:
@@ -112,17 +113,14 @@ def main ():
                 for client in clients:
                     if DEBUG:
                         print("Pinging Client " + client)
-                    try:
-                        if ping(client,count=2).success():
-                            WAKEUP = True
-                            break
-                    except OSError as error :
-                        print(error)
-                        print("File descriptor is not associated with any terminal device")
+                    CLIENT_UP  = True if os.system("ping -c 2 " + client.strip(";")) is 0 else False
+                    if CLIENT_UP:
+                        WAKEUP = True
+                        break
                         
                 if WAKEUP:
                     
-                    host_online = ping(host_wakeup,count=5).success()
+                    host_online = True if os.system("ping -c 5 " + host_wakeup.strip(";")) is 0 else False
                     
                     if not host_online:
                                         
