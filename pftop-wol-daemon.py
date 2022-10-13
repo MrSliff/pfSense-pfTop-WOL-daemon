@@ -78,9 +78,9 @@ def main ():
 
     while True:
         
-        HOST_UP = True if os.system("ping -c 5 " + host_wakeup.strip(";")) is 0 else False
+        HOST_UP = True if os.system("ping -c 2 " + host_wakeup.strip(";")) == 0 else False
 
-        if HOST_UP:
+        if not HOST_UP:
 
             if DEBUG:
                 print("Host offline, checking client activity")
@@ -113,14 +113,14 @@ def main ():
                 for client in clients:
                     if DEBUG:
                         print("Pinging Client " + client)
-                    CLIENT_UP  = True if os.system("ping -c 2 " + client.strip(";")) is 0 else False
+                    CLIENT_UP  = True if os.system("ping -c 2 " + client.strip(";")) == 0 else False
                     if CLIENT_UP:
                         WAKEUP = True
                         break
                         
                 if WAKEUP:
                     
-                    host_online = True if os.system("ping -c 5 " + host_wakeup.strip(";")) is 0 else False
+                    host_online = True if os.system("ping -c 5 " + host_wakeup.strip(";")) == 0 else False
                     
                     if not host_online:
                                         
