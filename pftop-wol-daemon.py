@@ -74,9 +74,16 @@ if MQTT:
 ####################################
 
 def main ():
+
+    WAKEUP = False
+    HOST_ACTIVE = False
+
     while True:
         
         if not ping(host,count=2).success():
+
+            if DEBUG:
+                print("Host offline, checking client activity")
 
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "off")
@@ -104,6 +111,7 @@ def main ():
                 for client in clients:
                     if ping(client,count=2).success():
                         WAKEUP = True
+                        break
                         
                 if WAKEUP:
                     
