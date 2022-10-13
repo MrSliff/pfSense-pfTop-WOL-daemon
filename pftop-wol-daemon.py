@@ -112,9 +112,13 @@ def main ():
                 for client in clients:
                     if DEBUG:
                         print("Pinging Client " + client)
-                    if ping(client,count=2).success():
-                        WAKEUP = True
-                        break
+                    try:
+                        if ping(client,count=2).success():
+                            WAKEUP = True
+                            break
+                    except OSError as error :
+                        print(error)
+                        print("File descriptor is not associated with any terminal device")
                         
                 if WAKEUP:
                     
