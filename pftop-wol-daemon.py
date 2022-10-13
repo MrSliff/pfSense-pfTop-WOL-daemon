@@ -21,7 +21,6 @@ host_wakeup = "192.168.20.3"
 
 #Which host IPs to monitor for activity to wakeup host
 host_activity = ["192.168.20.3",
-                 "192.168.20.2",
                  "192.168.20.16",
                  "192.168.20.18",
                  "192.168.20.21",
@@ -111,7 +110,8 @@ def main ():
 
             elif CLIENT_ACTIVITY:
                 for client in clients:
-                    if ping(client,count=2).success():
+                    pinged = ping(client,count=2)
+                    if pinged.success():
                         WAKEUP = True
                         break
                         
