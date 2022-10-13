@@ -91,6 +91,8 @@ def main ():
             for host in host_activity:
                 if len(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines()) > 0:
                     HOST_ACTIVE = True
+                    if DEBUG:
+                        print(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines())
                     break
             
             if HOST_ACTIVE:
