@@ -80,7 +80,7 @@ def main ():
 
     while True:
         
-        if not ping(host,count=2).success():
+        if not ping(host_wakeup,count=2).success():
 
             if DEBUG:
                 print("Host offline, checking client activity")
@@ -115,7 +115,7 @@ def main ():
                         
                 if WAKEUP:
                     
-                    host_online = ping(host,count=5).success()
+                    host_online = ping(host_wakeup,count=5).success()
                     
                     if not host_online:
                                         
