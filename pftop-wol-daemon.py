@@ -106,8 +106,8 @@ def main ():
                     mqtt_client.publish(mqtt_wakeup_topic, "wakeup")                
                 if DEBUG:
                     print("Waking up by pftop state")
-                
-                sleep(240)
+                while not HOST_UP:
+                    HOST_UP = True if os.system("ping -c 1 " + host_wakeup.strip(";")) == 0 else False
 
             elif CLIENT_ACTIVITY:
                 for client in clients:
@@ -119,32 +119,27 @@ def main ():
                         break
                         
                 if WAKEUP:
-                    
-                    host_online = True if os.system("ping -c 1 " + host_wakeup.strip(";")) == 0 else False
-                    
-                    if not host_online:
                                         
-                        WAKEUP = False    
-                        #if WOL:
-                            #do something
-                        if WEBHOOK:
-                            requests.get(webhook_url)
-                        if MQTT: 
-                            mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
-                        
-                        if DEBUG:
-                            print("Waking up by client activity")
+                    WAKEUP = False    
+                    #if WOL:
+                        #do something
+                    if WEBHOOK:
+                        requests.get(webhook_url)
+                    if MQTT: 
+                        mqtt_client.publish(mqtt_wakeup_topic, "wakeup")
                     
-                        sleep(240)                      
+                    if DEBUG:
+                        print("Waking up by client activity")
+                
+                    while not HOST_UP:
+                        HOST_UP = True if os.system("ping -c 1 " + host_wakeup.strip(";")) == 0 else False                    
 
         else:
 
             if MQTT:
-                mqtt_client.publish(mqtt_state_topic, "on")
+                mqtt_client.publish(mqtt_state_topic, "online")
             
-            print("Host online, sleeping for 240s")
-                
-            sleep(240)
+            print("Host online, doing nothing")
         
         sleep(sleep_time)
 
