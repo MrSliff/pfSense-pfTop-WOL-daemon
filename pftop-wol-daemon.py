@@ -92,7 +92,8 @@ def main ():
                 if len(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines()) > 0:
                     PFTOP_ACTIVE = True
                     if DEBUG:
-                        print(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines())
+                        #print(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines())
+                        print("Activity on "+ host + ", waking up host")
                     break
             
             if PFTOP_ACTIVE:
@@ -116,6 +117,7 @@ def main ():
                     CLIENT_UP  = True if os.system("ping -c 1 " + client.strip(";")) == 0 else False
                     if CLIENT_UP:
                         WAKEUP = True
+                        print("Client "+ client +" is online, waking up host")
                         break
                         
                 if WAKEUP:
@@ -139,7 +141,14 @@ def main ():
             if MQTT:
                 mqtt_client.publish(mqtt_state_topic, "online")
             
-            print("Host online, doing nothing")
+            while HOST_UP:
+                HOST_UP = True if os.system("ping -c 1 " + host_wakeup.strip(";")) == 0 else False
+                print("Host is online, doing nothing")
+                sleep(1)
+                
+            print("Host just went offline, sleeping for 240 seconds")
+            
+            sleep(240)
         
         sleep(sleep_time)
 
