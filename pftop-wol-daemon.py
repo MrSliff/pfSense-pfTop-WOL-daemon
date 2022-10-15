@@ -117,7 +117,8 @@ def main ():
                     CLIENT_UP  = True if os.system("ping -c 1 " + client.strip(";")) == 0 else False
                     if CLIENT_UP:
                         WAKEUP = True
-                        print("Client "+ client +" is online, waking up host")
+                        if DEBUG:
+                            print("Client "+ client +" is online, waking up host")
                         break
                         
                 if WAKEUP:
