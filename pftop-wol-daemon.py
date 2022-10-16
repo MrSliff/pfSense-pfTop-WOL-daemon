@@ -60,10 +60,10 @@ pid = "/tmp/pftop_wake.pid"
 if LOGGING:
     Log_Format = "%(levelname)s %(asctime)s - %(message)s"
 
-    logging.basicConfig(filename = "logfile.log",
+    logging.basicConfig(filename = "/custom/pfSense-pfTop-WOL-daemon/logfile.log",
                     filemode = "w",
                     format = Log_Format, 
-                    level = logging.DEBUG)
+                    level = logging.INFO)
 
     logger = logging.getLogger()
 
@@ -160,7 +160,10 @@ def main ():
             
             while HOST_UP:
                 HOST_UP = True if os.system("ping -c 1 " + host_wakeup.strip(";")) == 0 else False
-                print("Host is online, doing nothing")
+                if DEBUG:
+                    print("Host is online, doing nothing")
+                if LOGGING:
+                    logger.info("Host is online, doing nothing")
                 sleep(1)
                 
             print("Host just went offline, sleeping for 240 seconds")
