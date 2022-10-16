@@ -4,10 +4,12 @@ from time import sleep
 from daemonize import Daemonize
 import paho.mqtt.client as mqtt
 import requests
+import logging
 
 ######## SETTINGS #################
 
 DEBUG = True
+LOGGING = True
 
 #Which services should be used (True/False)
 WOL= False #Not implemented yet!
@@ -55,6 +57,16 @@ sleep_time = 1
 
 pid = "/tmp/pftop_wake.pid"
 
+if LOGGING:
+    Log_Format = "%(levelname)s %(asctime)s - %(message)s"
+
+    logging.basicConfig(filename = "logfile.log",
+                    filemode = "w",
+                    format = Log_Format, 
+                    level = logging.DEBUG)
+
+    logger = logging.getLogger()
+
 ############# MQTT ################
 
 if MQTT:
@@ -94,6 +106,8 @@ def main ():
                     if DEBUG:
                         #print(os.popen('pftop -b -a -f "dst host ' + host + '" | grep 2:0').readlines())
                         print("Activity on "+ host + ", waking up host")
+                    if LOGGING:
+                        logger.info("Activity on "+ host + ", waking up host")
                     break
             
             if PFTOP_ACTIVE:
@@ -119,6 +133,8 @@ def main ():
                         WAKEUP = True
                         if DEBUG:
                             print("Client "+ client +" is online, waking up host")
+                        if LOGGING:
+                            logger.info("Client "+ client +" is online, waking up host")
                         break
                         
                 if WAKEUP:
