@@ -60,7 +60,7 @@ pid = "/tmp/pftop_wake.pid"
 if LOGGING:
     Log_Format = "%(levelname)s %(asctime)s - %(message)s"
 
-    logging.basicConfig(filename = "/tmp/pftop_daemon/logfile.log",
+    logging.basicConfig(filename = "/custom/pfSense-pfTop-WOL-daemon/logfile.log",
                     filemode = "w",
                     format = Log_Format, 
                     level = logging.INFO)
